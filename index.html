@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Love Calculator</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: #f2f2f2;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      color: #ff69b4;
+      text-align: center;
+    }
+
+    form {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin: 20px auto;
+      max-width: 600px;
+      padding: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    input[type="text"] {
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      font-size: 18px;
+      padding: 10px;
+      width: 100%;
+    }
+
+    button {
+      background-color: #ff69b4;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: bold;
+      padding: 10px 20px;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #ff0080;
+    }
+
+    p {
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    #output {
+      color: #ff69b4;
+      font-size: 24px;
+      margin-top: 10px;
+    }
+
+    .heart {
+      color: #ff69b4;
+      font-size: 32px;
+      margin: 0 5px;
+    }
+
+    .love {
+      color: #ff69b4;
+      font-size: 48px;
+      margin: 0 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1><span class="heart">❤️</span> Love Calculator <span class="heart">❤️</span></h1>
+  <form>
+    <label for="input-a">Enter your name:</label>
+    <input id="input-a" type="text"><br>
+    <label for="input-b">Enter your crush's name:</label>
+    <input id="input-b" type="text"><br>
+    <button onclick="calculateLove()">Calculate Love <span class="love">💘</span></button>
+  </form>
+  <p>Love compatibility: <span id="output"></span> <span class="heart">❤️</span></p>
+  
+  <script>
+    function calculateLove() {
+      let a = Array.from(document.getElementById('input-a').value);
+      let b = Array.from(document.getElementById('input-b').value);
+      let c = 0;
+
+      for (let i = 0; i < a.length; i++) {
+        for (let j = 0; j < b.length; j++) {
+          if (a[i] === b[j]) {
+            a[i] = '0';
+            b[j] = '0';
+          }
+        }
+      }
+
+      for (let i of a) {
+        if (i !== '0') {
+          c++;
+        }
+      }
+
+      for (let i of b) {
+        if (i !== '0') {
+          c++;
+        }
+      }
+
+      let f = ["friends", "lover", "affection", "marriage", "enemy", "sister"];
+      let t = 7;
+
+      for (let i = 0; i < 5; i++) {
+        if (c % t === f.length) {
+          f.splice((c - 1) % t, 1);
+        } else {
+          f.splice(c % t, 1);
+        }
+        t--;
+      }
+
+      document.getElementById('output').textContent = f.join(', ');
+    }
+  </script>
