@@ -81,23 +81,82 @@
       font-size: 48px;
       margin: 0 10px;
     }
+
+    #rating {
+      display: none;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    #rating label {
+      display: inline-block;
+      font-size: 18px;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+
+    #rating select {
+      font-size: 18px;
+      padding: 10px;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+    }
+
+    #submit-rating {
+      background-color: #ff69b4;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: bold;
+      padding: 10px 20px;
+      margin-top: 10px;
+    }
+
+    #submit-rating:hover {
+      background-color: #ff0080;
+    }
   </style>
 </head>
 <body>
   <h1><span class="heart">❤️</span> Love Calculator <span class="heart">❤️</span></h1>
-  <form>
-    <label for="input-a">Enter your name:</label>
-    <input id="input-a" type="text"><br>
-    <label for="input-b">Enter your crush's name:</label>
-    <input id="input-b" type="text"><br>
-    <button onclick="calculateLove()">Calculate Love <span class="love">💘</span></button>
+  <form id="form">
+    <label for="name1">Enter your name:</label>
+    <input type="text" id="name1" required>
+    <label for="name2">Enter your partner's name:</label>
+    <input type="text" id="name2"required >
+    <button type="submit">Calculate</button>
   </form>
-  <p>Love compatibility: <span id="output"></span> <span class="heart">❤️</span></p>
-  
+
+  <div id="output"></div>
+
+  <div id="rating">
+    <label for="rating-select">Rate this calculator:</label>
+    <select id="rating-select">
+      <option value="5">5 stars</option>
+      <option value="4">4 stars</option>
+      <option value="3">3 stars</option>
+      <option value="2">2 stars</option>
+      <option value="1">1 star</option>
+    </select>
+    <button id="submit-rating">Submit</button>
+  </div>
+
   <script>
-    function calculateLove() {
-      let a = Array.from(document.getElementById('input-a').value);
-      let b = Array.from(document.getElementById('input-b').value);
+    const form = document.getElementById('form');
+    const output = document.getElementById('output');
+    const rating = document.getElementById('rating');
+    const ratingSelect = document.getElementById('rating-select');
+    const submitRatingBtn = document.getElementById('submit-rating');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const name1 = document.getElementById('name1').value;
+      const name2 = document.getElementById('name2').value;
+      let a = name1.split('');
+      let b = name2.split('');
       let c = 0;
 
       for (let i = 0; i < a.length; i++) {
@@ -109,19 +168,19 @@
         }
       }
 
-      for (let i of a) {
-        if (i !== '0') {
+      for (let i = 0; i < a.length; i++) {
+        if (a[i] !== '0') {
           c++;
         }
       }
 
-      for (let i of b) {
-        if (i !== '0') {
+      for (let i = 0; i < b.length; i++) {
+        if (b[i] !== '0') {
           c++;
         }
       }
 
-      let f = ["friends", "lover", "affection", "marriage", "enemy", "sister"];
+      const f = ['friends', 'lover', 'affection', 'marriage', 'enemy', 'sister'];
       let t = 7;
 
       for (let i = 0; i < 5; i++) {
@@ -133,6 +192,22 @@
         t--;
       }
 
-      document.getElementById('output').textContent = f.join(', ');
-    }
+      output.innerHTML = `
+        <p><span class="love">❤️</span> ${name1} and ${name2} have a love score of <span id="score">${c}</span> out of 10 <span class="love">❤️</span></p>
+        <p>Your relationship is: <span id="relationship">${f[0]}</span></p>
+        <p></p>
+        <ul>
+        </ul>
+      `;
+
+      rating.style.display = 'block';
+    });
+
+    submitRatingBtn.addEventListener('click', function() {
+      const ratingValue = ratingSelect.value;
+      alert(`Thank you for rating this calculator ${ratingValue} stars!`);
+    });
   </script>
+
+</body>
+</html>
