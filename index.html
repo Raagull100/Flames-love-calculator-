@@ -1,162 +1,149 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Love Calculator</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      background-color: #f2f2f2;
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Calculator ❤️</title>
+    <style>
+      /* Global styles */
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f7e7e7;
+        text-align: center;
+      }
 
-    h1 {
-      color: #ff69b4;
-      text-align: center;
-    }
+      h1 {
+        color: #de3163;
+      }
 
-    form {
-      background-color: #fff;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      margin: 20px auto;
-      max-width: 600px;
-      padding: 20px;
-    }
+      /* Form styles */
+      form {
+        display: inline-block;
+        text-align: left;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.2);
+        margin-top: 50px;
+      }
 
-    label {
-      display: block;
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
+      label {
+        display: block;
+        margin-top: 10px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #de3163;
+      }
 
-    input[type="text"] {
-      border: 2px solid #ccc;
-      border-radius: 5px;
-      font-size: 18px;
-      padding: 10px;
-      width: 100%;
-    }
+      input[type="text"] {
+        font-size: 16px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        width: 100%;
+        margin-bottom: 20px;
+      }
 
-    button {
-      background-color: #ff69b4;
-      border: none;
-      border-radius: 5px;
-      color: #fff;
-      cursor: pointer;
-      font-size: 18px;
-      font-weight: bold;
-      padding: 10px 20px;
-      margin-top: 10px;
-    }
+      button {
+        background-color: #de3163;
+        color: #fff;
+        font-size: 20px;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+        margin-bottom: 20px;
+      }
 
-    button:hover {
-      background-color: #ff0080;
-    }
+      button:hover {
+        background-color: #ff7f7f;
+      }
 
-    p {
-      font-size: 18px;
-      font-weight: bold;
-      margin-top: 20px;
-      text-align: center;
-    }
+      #output {
+        font-size: 20px;
+        font-weight: bold;
+        color: #de3163;
+      }
 
-    #output {
-      color: #ff69b4;
-      font-size: 24px;
-      margin-top: 10px;
-    }
+      /* Progress bar styles */
+      .progress-bar {
+        width: 50%;
+        margin: 20px auto;
+        height: 20px;
+        background-color: #e4e4e4;
+        border-radius: 10px;
+        overflow: hidden;
+      }
 
-    .heart {
-      color: #ff69b4;
-      font-size: 32px;
-      margin: 0 5px;
-    }
+      .progress-bar-fill {
+        height: 100%;
+        background-color: #de3163;
+        width: 0%;
+        transition: width 1s ease-in-out;
+      }
 
-    .love {
-      color: #ff69b4;
-      font-size: 48px;
-      margin: 0 10px;
-    }
+      /* Rating system styles */
+      .rating {
+        display: inline-block;
+        margin-bottom: 20px;
+      }
 
-    #rating {
-      display: none;
-      margin-top: 20px;
-      text-align: center;
-    }
+      .rating > label {
+        color: #de3163;
+        font-size: 20px;
+        font-weight: bold;
+        margin-right: 10px;
+      }
 
-    #rating label {
-      display: inline-block;
-      font-size: 18px;
-      font-weight: bold;
-      margin-right: 10px;
-    }
+      .rating > input[type="radio"] {
+        display: none;
+      }
 
-    #rating select {
-      font-size: 18px;
-      padding: 10px;
-      border: 2px solid #ccc;
-      border-radius: 5px;
-    }
+      .rating > input[type="radio"] + label {
+        font-size: 40px;
+        line-height: 50px;
+        color: #ccc;
+        cursor: pointer;
+      }
 
-    #submit-rating {
-      background-color: #ff69b4;
-      border: none;
-      border-radius: 5px;
-      color: #fff;
-      cursor: pointer;
-      font-size: 18px;
-      font-weight: bold;
-      padding: 10px 20px;
-      margin-top: 10px;
-    }
+      .rating > input[type="radio"]:checked + label {
+        color: #de3163;
+      }
 
-    #submit-rating:hover {
-      background-color: #ff0080;
-    }
-  </style>
-</head>
-<body>
-  <h1><span class="heart">❤️</span> Love Calculator <span class="heart">❤️</span></h1>
-  <form id="form">
-    <label for="name1">Enter your name:</label>
-    <input type="text" id="name1" required>
-    <label for="name2">Enter your partner's name:</label>
-    <input type="text" id="name2"required >
-    <button type="submit">Calculate</button>
+    </style>
+  </head>
+  <body>
+    <h1>Love Calculator ❤️</h1>
+  <form method="POST" name="google-sheet">
+    <label for="input-a">Enter your name:</label>
+    <input id="input-a" type="text" name="Name"><br>
+    <label for="input-b">Enter your crush's name:</label>
+    <input id="input-b" type="text" name="Crush"><br>
+    <button onclick="calculateLove()">Calculate Love</button>
+    <p>Love compatibility: <span id="output"></span></p>
   </form>
-
-  <div id="output"></div>
-
-  <div id="rating">
-    <label for="rating-select">Rate this calculator:</label>
-    <select id="rating-select">
-      <option value="5">5 stars</option>
-      <option value="4">4 stars</option>
-      <option value="3">3 stars</option>
-      <option value="2">2 stars</option>
-      <option value="1">1 star</option>
-    </select>
-    <button id="submit-rating">Submit</button>
-  </div>
-
+  
   <script>
-    const form = document.getElementById('form');
-    const output = document.getElementById('output');
-    const rating = document.getElementById('rating');
-    const ratingSelect = document.getElementById('rating-select');
-    const submitRatingBtn = document.getElementById('submit-rating');
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyReiCvqThM4sJH2K3sqwjSIixwl_cEHSjpjbXlUCKUhQhIiEJNtcaOvb8o3gRHnvYXyg/exec';
+    const form = document.forms['google-sheet'];
 
-    form.addEventListener('submit', function(event) {
-      event.preventDefault();
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+        .then(response => {
+          console.log('Success!', response);
+          alert("Thanks for using Love Calculator..! Have a great day with your loved one.");
+        })
+        .catch(error => {
+          console.error('Error!', error.message);
+          alert("Sorry, something went wrong. Please try again later.");
+        });
+    });
 
-      const name1 = document.getElementById('name1').value;
-      const name2 = document.getElementById('name2').value;
-      let a = name1.split('');
-      let b = name2.split('');
+    function calculateLove() {
+      let a = Array.from(document.getElementById('input-a').value.toLowerCase().replace(/\s/g, ""));
+      let b = Array.from(document.getElementById('input-b').value.toLowerCase().replace(/\s/g, ""));
       let c = 0;
 
       for (let i = 0; i < a.length; i++) {
@@ -168,19 +155,19 @@
         }
       }
 
-      for (let i = 0; i < a.length; i++) {
-        if (a[i] !== '0') {
+      for (let i of a) {
+        if (i !== '0') {
           c++;
         }
       }
 
-      for (let i = 0; i < b.length; i++) {
-        if (b[i] !== '0') {
+      for (let i of b) {
+        if (i !== '0') {
           c++;
         }
       }
 
-      const f = ['friends', 'lover', 'affection', 'marriage', 'enemy', 'sister'];
+      let f = ["friends", "lover", "affection", "marriage", "enemy", "sister"];
       let t = 7;
 
       for (let i = 0; i < 5; i++) {
@@ -192,22 +179,8 @@
         t--;
       }
 
-      output.innerHTML = `
-        <p><span class="love">❤️</span> ${name1} and ${name2} have a love score of <span id="score">${c}</span> out of 10 <span class="love">❤️</span></p>
-        <p>Your relationship is: <span id="relationship">${f[0]}</span></p>
-        <p></p>
-        <ul>
-        </ul>
-      `;
-
-      rating.style.display = 'block';
-    });
-
-    submitRatingBtn.addEventListener('click', function() {
-      const ratingValue = ratingSelect.value;
-      alert(`Thank you for rating this calculator ${ratingValue} stars!`);
-    });
+      document.getElementById('output').textContent = f.join(', ');
+    }
   </script>
-
 </body>
 </html>
