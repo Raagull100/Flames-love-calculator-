@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Calculator ❤️</title>
+    <style>
+      /* Global styles */
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f7e7e7;
+        text-align: center;
+      }
+
+      h1 {
+        color: #de3163;
+      }
+
+      /* Form styles */
+      form {
+        display: inline-block;
+        text-align: left;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.2);
+        margin-top: 50px;
+      }
+
+      label {
+        display: block;
+        margin-top: 10px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #de3163;
+      }
+
+      input[type="text"] {
+        font-size: 16px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        width: 100%;
+        margin-bottom: 20px;
+      }
+
+      button {
+        background-color: #de3163;
+        color: #fff;
+        font-size: 20px;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+        margin-bottom: 20px;
+      }
+
+      button:hover {
+        background-color: #ff7f7f;
+      }
+
+      #output {
+        font-size: 20px;
+        font-weight: bold;
+        color: #de3163;
+      }
+
+      /* Progress bar styles */
+      .progress-bar {
+        width: 50%;
+        margin: 20px auto;
+        height: 20px;
+        background-color: #e4e4e4;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      .progress-bar-fill {
+        height: 100%;
+        background-color: #de3163;
+        width: 0%;
+        transition: width 1s ease-in-out;
+      }
+
+      /* Rating system styles */
+      .rating {
+        display: inline-block;
+        margin-bottom: 20px;
+      }
+
+      .rating > label {
+        color: #de3163;
+        font-size: 20px;
+        font-weight: bold;
+        margin-right: 10px;
+      }
+
+      .rating > input[type="radio"] {
+        display: none;
+      }
+
+      .rating > input[type="radio"] + label {
+        font-size: 40px;
+        line-height: 50px;
+        color: #ccc;
+        cursor: pointer;
+      }
+
+      .rating > input[type="radio"]:checked + label {
+        color: #de3163;
+      }
+
+    </style>
+  </head>
+  <body>
+    <h1>Love Calculator ❤️</h1>
+  <form method="POST" name="google-sheet">
+    <label for="input-a">Enter your name:</label>
+    <input id="input-a" type="text" name="Name"><br>
+    <label for="input-b">Enter your crush's name:</label>
+    <input id="input-b" type="text" name="Crush"><br>
+    <button onclick="calculateLove()">Calculate Love</button>
+    <p>Love compatibility: <span id="output"></span></p>
+  </form>
+  
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyReiCvqThM4sJH2K3sqwjSIixwl_cEHSjpjbXlUCKUhQhIiEJNtcaOvb8o3gRHnvYXyg/exec';
+    const form = document.forms['google-sheet'];
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+        .then(response => {
+          console.log('Success!', response);
+          alert("Thanks for using Love Calculator..! Have a great day with your loved one.");
+        })
+        .catch(error => {
+          console.error('Error!', error.message);
+          alert("Sorry, something went wrong. Please try again later.");
+        });
+    });
+
+    function calculateLove() {
+      let a = Array.from(document.getElementById('input-a').value.toLowerCase().replace(/\s/g, ""));
+      let b = Array.from(document.getElementById('input-b').value.toLowerCase().replace(/\s/g, ""));
+      let c = 0;
+
+      for (let i = 0; i < a.length; i++) {
+        for (let j = 0; j < b.length; j++) {
+          if (a[i] === b[j]) {
+            a[i] = '0';
+            b[j] = '0';
+          }
+        }
+      }
+
+      for (let i of a) {
+        if (i !== '0') {
+          c++;
+        }
+      }
+
+      for (let i of b) {
+        if (i !== '0') {
+          c++;
+        }
+      }
+
+      let f = ["friends", "lover", "affection", "marriage", "enemy", "sister"];
+      let t = 7;
+
+      for (let i = 0; i < 5; i++) {
+        if (c % t === f.length) {
+          f.splice((c - 1) % t, 1);
+        } else {
+          f.splice(c % t, 1);
+        }
+        t--;
+      }
+
+      document.getElementById('output').textContent = f.join(', ');
+    }
+  </script>
+</body>
+</html>
